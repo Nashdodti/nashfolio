@@ -8,4 +8,5 @@ export interface Project {
   githubUrl?: string;
   technologies: string[];
   featured: boolean;
+  createdAt?: string;
 }

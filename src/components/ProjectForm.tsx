@@ -1,22 +1,33 @@
 
 import { useState, useEffect } from 'react';
 import { Project } from '@/types/project';
-import { X } from 'lucide-react';
+import { X, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface ProjectFormProps {
   project?: Project;
   onSave: (project: Project) => void;
   onCancel: () => void;
+  onDelete: (projectId: string) => void;
 }
 
 const defaultProject: Project = {
-  id: '',
+  id: crypto.randomUUID(),
   title: '',
   description: '',
   imageUrl: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80',
@@ -26,9 +37,11 @@ const defaultProject: Project = {
   featured: false,
 };
 
-const ProjectForm = ({ project, onSave, onCancel }: ProjectFormProps) => {
-  const [formData, setFormData] = useState<Project>(project || { ...defaultProject, id: crypto.randomUUID() });
+const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) => {
+  const [formData, setFormData] = useState<Project>(project || defaultProject);
   const [techInput, setTechInput] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -70,7 +83,7 @@ const ProjectForm = ({ project, onSave, onCancel }: ProjectFormProps) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.title.trim() || !formData.description.trim()) {
@@ -82,11 +95,23 @@ const ProjectForm = ({ project, onSave, onCancel }: ProjectFormProps) => {
       return;
     }
     
-    onSave(formData);
-    toast({
-      title: "Success",
-      description: `Project "${formData.title}" ${project ? 'updated' : 'created'} successfully`,
-    });
+    setIsSubmitting(true);
+    try {
+      await onSave(formData);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDelete = () => {
+    setShowDeleteDialog(true);
+  };
+
+  const confirmDelete = () => {
+    if (project) {
+      onDelete(project.id);
+    }
+    setShowDeleteDialog(false);
   };
 
   return (
@@ -209,25 +234,65 @@ const ProjectForm = ({ project, onSave, onCancel }: ProjectFormProps) => {
               <Label htmlFor="featured">Featured Project</Label>
             </div>
             
-            <div className="flex justify-end space-x-4 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={onCancel}
-                className="border-slate text-slate-light hover:text-white hover:bg-navy"
-              >
-                Cancel
-              </Button>
-              <Button 
-                type="submit"
-                className="bg-teal text-navy-dark hover:bg-teal-dark"
-              >
-                {project ? 'Update Project' : 'Create Project'}
-              </Button>
+            <div className="flex justify-between space-x-4 pt-4">
+              {project && (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  onClick={handleDelete}
+                  className="flex items-center"
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete Project
+                </Button>
+              )}
+              
+              <div className="flex ml-auto space-x-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={onCancel}
+                  className="border-slate text-slate-light hover:text-white hover:bg-navy"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  type="submit"
+                  className="bg-teal text-navy-dark hover:bg-teal-dark"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting 
+                    ? 'Saving...' 
+                    : project ? 'Update Project' : 'Create Project'}
+                </Button>
+              </div>
             </div>
           </form>
         </div>
       </div>
+
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent className="bg-navy-light border-slate/20">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the project
+              from your database.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-slate text-slate-light hover:text-white hover:bg-navy">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={confirmDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
