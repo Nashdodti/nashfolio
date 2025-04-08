@@ -11,7 +11,7 @@ const AboutSection = () => {
             <h2 className="text-3xl font-bold mb-6">About Me</h2>
             <div className="space-y-4 text-slate">
               <p>
-                Hello! I'm John, a web developer with a passion for creating engaging, 
+                Hello! I'm Nash, a web developer with a passion for creating engaging, 
                 responsive web applications. My journey in web development began over 
                 5 years ago, and I've been building things for the web ever since.
               </p>

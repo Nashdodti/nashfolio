@@ -9,7 +9,7 @@ const Hero = () => {
         <div className="max-w-3xl animate-fade-in [animation-delay:200ms] opacity-0">
           <p className="text-teal mb-5 font-mono">Hi, my name is</p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-            John Developer.
+            Nash.
           </h1>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate mb-8">
             I build things for the web.
