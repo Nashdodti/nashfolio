@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Project } from '@/types/project';
 import ProjectCard from './ProjectCard';
@@ -6,7 +5,7 @@ import ProjectForm from './ProjectForm';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
-import { supabase } from '@/integrations/supabase/client';
+import { supabaseTyped as supabase } from '@/integrations/supabase/client-typed';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const ProjectsSection = () => {
@@ -32,7 +31,11 @@ const ProjectsSection = () => {
         throw error;
       }
 
-      // Map database column names to our interface property names
+      if (!data) {
+        setProjects([]);
+        return;
+      }
+
       const mappedProjects = data.map(item => ({
         id: item.id,
         title: item.title,
@@ -70,7 +73,6 @@ const ProjectsSection = () => {
 
   const handleSaveProject = async (project: Project) => {
     try {
-      // Map our interface property names to database column names
       const dbProject = {
         id: project.id,
         title: project.title,
@@ -83,7 +85,6 @@ const ProjectsSection = () => {
       };
 
       if (currentProject) {
-        // Update existing project
         const { error } = await supabase
           .from('projects')
           .update(dbProject)
@@ -96,8 +97,6 @@ const ProjectsSection = () => {
           description: "Your project has been successfully updated.",
         });
       } else {
-        // Add new project
-        // Remove the id so Supabase can generate one
         const { id, ...newProject } = dbProject;
         
         const { error } = await supabase
@@ -112,7 +111,6 @@ const ProjectsSection = () => {
         });
       }
 
-      // Refetch projects to get the latest data
       fetchProjects();
       setIsFormOpen(false);
     } catch (error) {
@@ -134,7 +132,6 @@ const ProjectsSection = () => {
 
       if (error) throw error;
 
-      // Update state with filtered projects
       setProjects(prev => prev.filter(p => p.id !== projectId));
       setIsFormOpen(false);
       
@@ -152,11 +149,9 @@ const ProjectsSection = () => {
     }
   };
 
-  // Filter projects for featured and non-featured
   const featuredProjects = projects.filter(project => project.featured);
   const regularProjects = projects.filter(project => !project.featured);
 
-  // Loading skeletons for projects
   const SkeletonProjects = ({ count, isFeatured = false }: { count: number, isFeatured?: boolean }) => (
     <div className={`grid ${isFeatured ? 'md:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3'} gap-6`}>
       {Array(count).fill(0).map((_, index) => (
@@ -203,13 +198,11 @@ const ProjectsSection = () => {
 
         {isLoading ? (
           <>
-            {/* Featured projects skeleton */}
             <div className="mb-12">
               <h3 className="text-xl text-teal mb-6 font-mono">Featured Projects</h3>
               <SkeletonProjects count={2} isFeatured={true} />
             </div>
             
-            {/* Regular projects skeleton */}
             <div>
               <h3 className="text-xl text-teal mb-6 font-mono">All Projects</h3>
               <SkeletonProjects count={3} />
