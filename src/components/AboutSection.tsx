@@ -1,10 +1,7 @@
-
 import { Button } from '@/components/ui/button';
 import { FileText } from 'lucide-react';
-
 const AboutSection = () => {
-  return (
-    <section id="about" className="py-20 bg-navy-dark">
+  return <section id="about" className="py-20 bg-navy-dark">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold mb-12 text-center">About Me</h2>
         
@@ -24,13 +21,7 @@ const AboutSection = () => {
             </p>
             
             <div className="pt-4">
-              <Button 
-                variant="outline" 
-                className="border-teal text-teal hover:bg-teal/10"
-              >
-                <FileText className="mr-2" />
-                Download Resume
-              </Button>
+              
             </div>
           </div>
           
@@ -59,8 +50,6 @@ const AboutSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default AboutSection;
