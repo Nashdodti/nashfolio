@@ -117,9 +117,9 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
   return (
     <div className="fixed inset-0 bg-navy-dark/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-navy-light rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-white">
+        <div className="p-4 sm:p-6">
+          <div className="flex justify-between items-center mb-4 sm:mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-white">
               {project ? 'Edit Project' : 'Add New Project'}
             </h2>
             <Button variant="ghost" size="icon" onClick={onCancel}>
@@ -127,7 +127,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
             </Button>
           </div>
           
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             <div className="space-y-2">
               <Label htmlFor="title">Project Title *</Label>
               <Input
@@ -225,7 +225,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
               </div>
             </div>
             
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 py-2">
               <Switch
                 id="featured"
                 checked={formData.featured}
@@ -234,7 +234,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
               <Label htmlFor="featured">Featured Project</Label>
             </div>
             
-            <div className="flex justify-between space-x-4 pt-4">
+            <div className="flex flex-col sm:flex-row sm:justify-between gap-3 pt-4">
               {project && (
                 <Button
                   type="button"
@@ -247,7 +247,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
                 </Button>
               )}
               
-              <div className="flex ml-auto space-x-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:ml-auto">
                 <Button
                   type="button"
                   variant="outline"
