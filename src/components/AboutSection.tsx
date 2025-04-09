@@ -25,29 +25,7 @@ const AboutSection = () => {
             </div>
           </div>
           
-          <div className="bg-navy-light p-6 rounded-lg border border-slate/10">
-            <h3 className="text-xl font-semibold mb-4 text-teal">Skills</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h4 className="font-medium mb-2 text-white">Frontend</h4>
-                <ul className="space-y-2 text-slate-light">
-                  <li>React.js</li>
-                  <li>Next.js</li>
-                  <li>TypeScript</li>
-                  <li>Tailwind CSS</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium mb-2 text-white">Backend</h4>
-                <ul className="space-y-2 text-slate-light">
-                  <li>Node.js</li>
-                  <li>Express</li>
-                  <li>PostgreSQL</li>
-                  <li>Supabase</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </div>
     </section>;
