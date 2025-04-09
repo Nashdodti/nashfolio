@@ -44,7 +44,7 @@ const Navbar = () => {
       {/* Mobile menu */}
       <div
         className={cn(
-          "fixed inset-0 bg-navy-dark z-40 flex flex-col items-center justify-center space-y-8 pt-16",
+          "fixed inset-0 bg-navy-dark/95 z-40 flex flex-col items-center justify-center space-y-8 pt-16",
           isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
           "transition-opacity duration-300 md:hidden"
         )}
