@@ -68,38 +68,37 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Redesigned Mobile menu */}
+      {/* Mobile menu overlay */}
       <div
         className={cn(
-          "fixed inset-0 bg-navy z-40 flex flex-col justify-center",
+          "fixed inset-0 bg-navy-dark/95 z-40 flex flex-col justify-center",
           isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
           "transition-all duration-300 ease-in-out md:hidden"
         )}
       >
-        <div className="container mx-auto px-6 py-10">
-          <nav className="flex flex-col items-center space-y-8">
-            <a 
-              href="#projects" 
-              className="w-full text-center py-4 px-6 rounded-lg text-white text-xl bg-navy-light hover:bg-teal/10 hover:text-teal transition-colors border border-slate/10 shadow-lg"
-              onClick={closeMenu}
-            >
-              Projects
-            </a>
+        <div className="container mx-auto px-4 py-10">
+          <nav className="flex flex-col items-center space-y-6">
             <a 
               href="#about" 
-              className="w-full text-center py-4 px-6 rounded-lg text-white text-xl bg-navy-light hover:bg-teal/10 hover:text-teal transition-colors border border-slate/10 shadow-lg"
+              className="w-full text-center py-4 rounded-xl text-white text-xl bg-[#112240] hover:bg-teal/10 hover:text-teal transition-colors"
               onClick={closeMenu}
             >
               About
             </a>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="w-full py-6 border-2 border-teal text-teal text-xl hover:bg-teal/10 rounded-lg shadow-lg mt-4"
+            <a 
+              href="#contact" 
+              className="w-full text-center py-4 rounded-xl text-teal text-xl bg-white/5 hover:bg-teal/10 transition-colors border border-teal/30"
               onClick={closeMenu}
             >
               Contact
-            </Button>
+            </a>
+            <a 
+              href="#projects" 
+              className="w-full text-center py-4 rounded-xl text-white text-xl bg-[#112240] hover:bg-teal/10 hover:text-teal transition-colors"
+              onClick={closeMenu}
+            >
+              Projects
+            </a>
           </nav>
         </div>
       </div>
