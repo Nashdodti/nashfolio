@@ -80,28 +80,26 @@ const Navbar = () => {
           <nav className="flex flex-col items-center space-y-8">
             <a 
               href="#projects" 
-              className="text-2xl font-medium text-white hover:text-teal transition-colors w-full text-center py-4 border-b border-slate/10"
+              className="w-full text-center py-4 px-6 rounded-lg text-white text-xl bg-navy-light hover:bg-teal/10 hover:text-teal transition-colors border border-slate/10 shadow-lg"
               onClick={closeMenu}
             >
               Projects
             </a>
             <a 
               href="#about" 
-              className="text-2xl font-medium text-white hover:text-teal transition-colors w-full text-center py-4 border-b border-slate/10"
+              className="w-full text-center py-4 px-6 rounded-lg text-white text-xl bg-navy-light hover:bg-teal/10 hover:text-teal transition-colors border border-slate/10 shadow-lg"
               onClick={closeMenu}
             >
               About
             </a>
-            <div className="pt-6 w-full flex justify-center">
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="border-2 border-teal text-teal hover:bg-teal/10 w-full max-w-xs"
-                onClick={closeMenu}
-              >
-                Contact
-              </Button>
-            </div>
+            <Button 
+              variant="outline" 
+              size="lg"
+              className="w-full py-6 border-2 border-teal text-teal text-xl hover:bg-teal/10 rounded-lg shadow-lg mt-4"
+              onClick={closeMenu}
+            >
+              Contact
+            </Button>
           </nav>
         </div>
       </div>

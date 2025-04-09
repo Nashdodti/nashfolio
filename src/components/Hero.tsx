@@ -1,7 +1,10 @@
+
 import { ArrowDownCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
 const Hero = () => {
-  return <section className="min-h-screen flex flex-col justify-center pt-20 pb-10">
+  return (
+    <section className="min-h-screen flex flex-col justify-center pt-20 pb-10">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl animate-fade-in [animation-delay:200ms] opacity-0">
           <p className="text-teal mb-5 font-mono">Hi, my name is</p>
@@ -19,18 +22,25 @@ const Hero = () => {
             <Button variant="outline" size="lg" className="border-teal text-teal bg-transparent">
               View My Work
             </Button>
-            <Button variant="ghost" size="lg" className="text-slate-light hover:text-teal group" onClick={() => {
-            const projectsSection = document.getElementById('projects');
-            projectsSection?.scrollIntoView({
-              behavior: 'smooth'
-            });
-          }}>
+            <Button 
+              variant="ghost" 
+              size="lg" 
+              className="text-slate-light hover:text-teal group" 
+              onClick={() => {
+                const projectsSection = document.getElementById('projects');
+                projectsSection?.scrollIntoView({
+                  behavior: 'smooth'
+                });
+              }}
+            >
               <span>Scroll Down</span>
               <ArrowDownCircle className="ml-2 h-5 w-5 group-hover:translate-y-1 transition-transform" />
             </Button>
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default Hero;
