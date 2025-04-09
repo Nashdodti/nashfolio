@@ -1,20 +1,47 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    // Prevent scrolling when menu is open
+    document.body.style.overflow = isMenuOpen ? 'auto' : 'hidden';
+  };
+
+  // Close menu when a link is clicked
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    document.body.style.overflow = 'auto';
   };
 
   return (
-    <header className="fixed w-full z-50 bg-navy/90 backdrop-blur-md border-b border-slate/10">
+    <header 
+      className={cn(
+        "fixed w-full z-50 transition-all duration-300",
+        scrolled ? "bg-navy shadow-lg backdrop-blur-md" : "bg-navy/80 backdrop-blur-sm"
+      )}
+    >
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <a href="/" className="text-xl font-semibold text-white">
+        <a href="/" className="text-xl font-semibold text-white z-50 relative">
           <span className="text-teal">Port</span>folio
         </a>
 
@@ -33,43 +60,50 @@ const Navbar = () => {
 
         {/* Mobile menu button */}
         <button 
-          className="md:hidden text-slate-light hover:text-teal"
+          className="md:hidden text-white hover:text-teal z-50 relative"
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          {isMenuOpen ? <X /> : <Menu />}
+          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Redesigned Mobile menu */}
       <div
         className={cn(
-          "fixed inset-0 bg-navy-dark/95 z-40 flex flex-col items-center justify-center space-y-8 pt-16",
+          "fixed inset-0 bg-navy z-40 flex flex-col justify-center",
           isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
-          "transition-opacity duration-300 md:hidden"
+          "transition-all duration-300 ease-in-out md:hidden"
         )}
       >
-        <a 
-          href="#projects" 
-          className="text-xl text-slate-light hover:text-teal transition-colors"
-          onClick={toggleMenu}
-        >
-          Projects
-        </a>
-        <a 
-          href="#about" 
-          className="text-xl text-slate-light hover:text-teal transition-colors"
-          onClick={toggleMenu}
-        >
-          About
-        </a>
-        <Button 
-          variant="outline" 
-          className="border-teal text-teal hover:bg-teal/10"
-          onClick={toggleMenu}
-        >
-          Contact
-        </Button>
+        <div className="container mx-auto px-6 py-10">
+          <nav className="flex flex-col items-center space-y-8">
+            <a 
+              href="#projects" 
+              className="text-2xl font-medium text-white hover:text-teal transition-colors w-full text-center py-4 border-b border-slate/10"
+              onClick={closeMenu}
+            >
+              Projects
+            </a>
+            <a 
+              href="#about" 
+              className="text-2xl font-medium text-white hover:text-teal transition-colors w-full text-center py-4 border-b border-slate/10"
+              onClick={closeMenu}
+            >
+              About
+            </a>
+            <div className="pt-6 w-full flex justify-center">
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="border-2 border-teal text-teal hover:bg-teal/10 w-full max-w-xs"
+                onClick={closeMenu}
+              >
+                Contact
+              </Button>
+            </div>
+          </nav>
+        </div>
       </div>
     </header>
   );
