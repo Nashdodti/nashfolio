@@ -1,11 +1,15 @@
 
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -20,18 +24,6 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    // Prevent scrolling when menu is open
-    document.body.style.overflow = isMenuOpen ? 'auto' : 'hidden';
-  };
-
-  // Close menu when a link is clicked
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-    document.body.style.overflow = 'auto';
-  };
 
   return (
     <header 
@@ -58,49 +50,61 @@ const Navbar = () => {
           </Button>
         </nav>
 
-        {/* Mobile menu button */}
-        <button 
-          className="md:hidden text-white hover:text-teal z-50 relative"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-
-      {/* Mobile menu overlay */}
-      <div
-        className={cn(
-          "fixed inset-0 bg-navy-dark/95 z-40 flex flex-col justify-center",
-          isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
-          "transition-all duration-300 ease-in-out md:hidden"
-        )}
-      >
-        <div className="container mx-auto px-4 py-10">
-          <nav className="flex flex-col items-center space-y-6">
-            <a 
-              href="#about" 
-              className="w-full text-center py-4 rounded-xl text-white text-xl bg-[#112240] hover:bg-teal/10 hover:text-teal transition-colors"
-              onClick={closeMenu}
-            >
-              About
-            </a>
-            <a 
-              href="#contact" 
-              className="w-full text-center py-4 rounded-xl text-teal text-xl bg-white/5 hover:bg-teal/10 transition-colors border border-teal/30"
-              onClick={closeMenu}
-            >
-              Contact
-            </a>
-            <a 
-              href="#projects" 
-              className="w-full text-center py-4 rounded-xl text-white text-xl bg-[#112240] hover:bg-teal/10 hover:text-teal transition-colors"
-              onClick={closeMenu}
-            >
-              Projects
-            </a>
-          </nav>
-        </div>
+        {/* Mobile Menu */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="md:hidden text-white hover:text-teal hover:bg-transparent">
+              <Menu size={28} />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-full p-0 bg-navy border-none">
+            <div className="flex flex-col h-full">
+              <div className="p-4 border-b border-navy-light/20">
+                <a href="/" className="text-xl font-semibold text-white">
+                  <span className="text-teal">Port</span>folio
+                </a>
+              </div>
+              
+              <nav className="flex-1 py-8 px-4 flex flex-col space-y-6">
+                <a 
+                  href="#projects" 
+                  className="text-white text-2xl font-medium hover:text-teal transition-colors"
+                >
+                  Projects
+                </a>
+                <a 
+                  href="#about" 
+                  className="text-white text-2xl font-medium hover:text-teal transition-colors"
+                >
+                  About
+                </a>
+                <a 
+                  href="#contact" 
+                  className="text-white text-2xl font-medium hover:text-teal transition-colors"
+                >
+                  Contact
+                </a>
+              </nav>
+              
+              <div className="mt-auto p-4 border-t border-navy-light/20">
+                <a 
+                  href="tel:+1234567890" 
+                  className="flex items-center gap-2 text-teal hover:text-teal-dark transition-colors text-xl"
+                >
+                  <Phone size={20} />
+                  Call Us
+                </a>
+                
+                <Button 
+                  className="w-full mt-4 bg-teal text-navy-dark hover:bg-teal-dark"
+                >
+                  Login
+                </Button>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </header>
   );
