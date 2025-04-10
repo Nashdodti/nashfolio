@@ -3,10 +3,13 @@ import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,14 +26,10 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    // Prevent scrolling when menu is open
-    document.body.style.overflow = isMenuOpen ? 'auto' : 'hidden';
   };
 
-  // Close menu when a link is clicked
   const closeMenu = () => {
     setIsMenuOpen(false);
-    document.body.style.overflow = 'auto';
   };
 
   return (
@@ -69,39 +68,61 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu overlay */}
-      <div
-        className={cn(
-          "fixed inset-0 bg-navy-dark/95 z-40 flex flex-col justify-center",
-          isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
-          "transition-all duration-300 ease-in-out md:hidden"
-        )}
-      >
-        <div className="container mx-auto px-4 py-10">
-          <nav className="flex flex-col items-center space-y-6">
-            <a 
-              href="#about" 
-              className="w-full text-center py-4 rounded-xl text-white text-xl bg-[#112240] hover:bg-teal/10 hover:text-teal transition-colors"
-              onClick={closeMenu}
-            >
-              About
-            </a>
-            <a 
-              href="#contact" 
-              className="w-full text-center py-4 rounded-xl text-teal text-xl bg-white/5 hover:bg-teal/10 transition-colors border border-teal/30"
-              onClick={closeMenu}
-            >
-              Contact
-            </a>
-            <a 
-              href="#projects" 
-              className="w-full text-center py-4 rounded-xl text-white text-xl bg-[#112240] hover:bg-teal/10 hover:text-teal transition-colors"
-              onClick={closeMenu}
-            >
-              Projects
-            </a>
-          </nav>
+      {isMobile && (
+        <div
+          className={cn(
+            "fixed inset-0 bg-navy-dark z-40 flex flex-col items-center justify-start pt-28",
+            isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
+            "transition-all duration-300 ease-in-out md:hidden"
+          )}
+        >
+          <button 
+            className="absolute top-4 right-4 text-white p-2"
+            onClick={closeMenu}
+            aria-label="Close menu"
+          >
+            <X size={32} className="text-teal" />
+          </button>
+          
+          <div className="w-full max-w-md px-6">
+            <nav className="flex flex-col items-center space-y-6 w-full">
+              <a 
+                href="/" 
+                className="w-full text-center py-4 text-teal text-2xl font-medium hover:text-white transition-colors"
+                onClick={closeMenu}
+              >
+                Portfolio
+              </a>
+              
+              <a 
+                href="#contact" 
+                className="w-full text-center py-4 text-teal text-2xl font-medium hover:text-white transition-colors"
+                onClick={closeMenu}
+              >
+                Contact
+              </a>
+              
+              <div className="w-full h-px bg-navy-light my-2"></div>
+              
+              <a 
+                href="#projects" 
+                className="w-full text-center py-4 text-white text-2xl font-medium hover:text-teal transition-colors"
+                onClick={closeMenu}
+              >
+                Projects
+              </a>
+              
+              <a 
+                href="#about" 
+                className="w-full text-center py-4 text-white text-2xl font-medium hover:text-teal transition-colors"
+                onClick={closeMenu}
+              >
+                About
+              </a>
+            </nav>
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 };
