@@ -1,11 +1,7 @@
-
 import { Github, Linkedin, Mail } from 'lucide-react';
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  
-  return (
-    <footer className="py-12 bg-portfolio-light border-t border-gray-200">
+  return <footer className="py-12 bg-portfolio-light border-t border-gray-200">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
@@ -17,17 +13,7 @@ const Footer = () => {
             </p>
           </div>
           
-          <div className="flex space-x-6 mb-6 md:mb-0">
-            <a href="#" className="text-portfolio-dark hover:text-portfolio-blue transition-colors" aria-label="GitHub">
-              <Github size={20} />
-            </a>
-            <a href="#" className="text-portfolio-dark hover:text-portfolio-blue transition-colors" aria-label="LinkedIn">
-              <Linkedin size={20} />
-            </a>
-            <a href="#" className="text-portfolio-dark hover:text-portfolio-blue transition-colors" aria-label="Email">
-              <Mail size={20} />
-            </a>
-          </div>
+          
         </div>
         
         <div className="mt-8 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
@@ -45,8 +31,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
