@@ -11,37 +11,37 @@ export type Database = {
     Tables: {
       projects: {
         Row: {
-          created_at: string
-          description: string
-          featured: boolean
+          created_at: string | null
+          description: string | null
+          featured: boolean | null
           github_url: string | null
-          id: string
-          image_url: string
+          id: string | null
+          image_url: string | null
           live_url: string | null
-          technologies: string[]
-          title: string
+          technologies: Json | null
+          title: string | null
         }
         Insert: {
-          created_at?: string
-          description: string
-          featured?: boolean
+          created_at?: string | null
+          description?: string | null
+          featured?: boolean | null
           github_url?: string | null
-          id?: string
-          image_url: string
+          id?: string | null
+          image_url?: string | null
           live_url?: string | null
-          technologies?: string[]
-          title: string
+          technologies?: Json | null
+          title?: string | null
         }
         Update: {
-          created_at?: string
-          description?: string
-          featured?: boolean
+          created_at?: string | null
+          description?: string | null
+          featured?: boolean | null
           github_url?: string | null
-          id?: string
-          image_url?: string
+          id?: string | null
+          image_url?: string | null
           live_url?: string | null
-          technologies?: string[]
-          title?: string
+          technologies?: Json | null
+          title?: string | null
         }
         Relationships: []
       }
