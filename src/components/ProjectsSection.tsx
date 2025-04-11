@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Project } from '@/types/project';
 import ProjectCard from './ProjectCard';
@@ -155,20 +156,20 @@ const ProjectsSection = () => {
   const SkeletonProjects = ({ count, isFeatured = false }: { count: number, isFeatured?: boolean }) => (
     <div className={`grid ${isFeatured ? 'md:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3'} gap-6`}>
       {Array(count).fill(0).map((_, index) => (
-        <div key={index} className="rounded-lg bg-navy-light overflow-hidden h-full">
-          <Skeleton className="h-48 w-full" />
+        <div key={index} className="glass-card rounded-lg overflow-hidden h-full">
+          <Skeleton className="h-48 w-full bg-gray-100/50" />
           <div className="p-6">
-            <Skeleton className="h-6 w-3/4 mb-2" />
-            <Skeleton className="h-4 w-full mb-1" />
-            <Skeleton className="h-4 w-5/6 mb-4" />
+            <Skeleton className="h-6 w-3/4 mb-2 bg-gray-100/50" />
+            <Skeleton className="h-4 w-full mb-1 bg-gray-100/50" />
+            <Skeleton className="h-4 w-5/6 mb-4 bg-gray-100/50" />
             <div className="flex flex-wrap gap-2 mb-4">
               {Array(3).fill(0).map((_, i) => (
-                <Skeleton key={i} className="h-6 w-16 rounded-full" />
+                <Skeleton key={i} className="h-6 w-16 rounded-full bg-gray-100/50" />
               ))}
             </div>
             <div className="flex justify-between">
-              <Skeleton className="h-5 w-16" />
-              <Skeleton className="h-5 w-16" />
+              <Skeleton className="h-5 w-16 bg-gray-100/50" />
+              <Skeleton className="h-5 w-16 bg-gray-100/50" />
             </div>
           </div>
         </div>
@@ -177,19 +178,19 @@ const ProjectsSection = () => {
   );
 
   return (
-    <section id="projects" className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-12">
+    <section id="projects" className="section-padding bg-portfolio-light/50">
+      <div className="container mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
           <div>
-            <h2 className="text-3xl font-bold mb-2">My Projects</h2>
-            <p className="text-slate max-w-2xl">
+            <h2 className="text-3xl font-bold mb-2 gradient-text">My Projects</h2>
+            <p className="text-portfolio-gray max-w-2xl">
               A collection of web applications I've built. Each project demonstrates
               different skills and technologies.
             </p>
           </div>
           <Button 
             onClick={handleAddProject}
-            className="bg-teal text-navy-dark hover:bg-teal-dark"
+            className="gradient-button whitespace-nowrap"
           >
             <Plus className="mr-2 h-4 w-4" />
             Add Project
@@ -198,13 +199,13 @@ const ProjectsSection = () => {
 
         {isLoading ? (
           <>
-            <div className="mb-12">
-              <h3 className="text-xl text-teal mb-6 font-mono">Featured Projects</h3>
+            <div className="mb-12 opacity-70">
+              <h3 className="text-xl text-portfolio-blue mb-6 font-mono">Featured Projects</h3>
               <SkeletonProjects count={2} isFeatured={true} />
             </div>
             
-            <div>
-              <h3 className="text-xl text-teal mb-6 font-mono">All Projects</h3>
+            <div className="opacity-70">
+              <h3 className="text-xl text-portfolio-blue mb-6 font-mono">All Projects</h3>
               <SkeletonProjects count={3} />
             </div>
           </>
@@ -212,7 +213,7 @@ const ProjectsSection = () => {
           <>
             {featuredProjects.length > 0 && (
               <div className="mb-12">
-                <h3 className="text-xl text-teal mb-6 font-mono">Featured Projects</h3>
+                <h3 className="text-xl text-portfolio-blue mb-6 font-mono">Featured Projects</h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   {featuredProjects.map(project => (
                     <ProjectCard 
@@ -226,7 +227,7 @@ const ProjectsSection = () => {
             )}
 
             <div>
-              <h3 className="text-xl text-teal mb-6 font-mono">All Projects</h3>
+              <h3 className="text-xl text-portfolio-blue mb-6 font-mono">All Projects</h3>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {regularProjects.map(project => (
                   <ProjectCard 
