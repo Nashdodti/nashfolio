@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Project } from '@/types/project';
 import { X, Trash2 } from 'lucide-react';
@@ -115,11 +114,11 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
   };
 
   return (
-    <div className="fixed inset-0 bg-navy-dark/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-navy-light rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl">
         <div className="p-4 sm:p-6">
           <div className="flex justify-between items-center mb-4 sm:mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-white">
+            <h2 className="text-xl sm:text-2xl font-bold text-portfolio-dark">
               {project ? 'Edit Project' : 'Add New Project'}
             </h2>
             <Button variant="ghost" size="icon" onClick={onCancel}>
@@ -136,7 +135,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="My Awesome Project"
-                className="bg-navy border-slate/20 focus-visible:ring-teal"
+                className="bg-white border-gray-300 focus-visible:ring-portfolio-blue"
               />
             </div>
             
@@ -148,7 +147,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="A brief description of your project"
-                className="bg-navy border-slate/20 focus-visible:ring-teal min-h-[100px]"
+                className="bg-white border-gray-300 focus-visible:ring-portfolio-blue min-h-[100px]"
               />
             </div>
             
@@ -160,7 +159,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
                 value={formData.imageUrl}
                 onChange={handleChange}
                 placeholder="https://example.com/image.jpg"
-                className="bg-navy border-slate/20 focus-visible:ring-teal"
+                className="bg-white border-gray-300 focus-visible:ring-portfolio-blue"
               />
             </div>
             
@@ -173,7 +172,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
                   value={formData.liveUrl}
                   onChange={handleChange}
                   placeholder="https://myproject.com"
-                  className="bg-navy border-slate/20 focus-visible:ring-teal"
+                  className="bg-white border-gray-300 focus-visible:ring-portfolio-blue"
                 />
               </div>
               
@@ -185,7 +184,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
                   value={formData.githubUrl}
                   onChange={handleChange}
                   placeholder="https://github.com/username/repo"
-                  className="bg-navy border-slate/20 focus-visible:ring-teal"
+                  className="bg-white border-gray-300 focus-visible:ring-portfolio-blue"
                 />
               </div>
             </div>
@@ -198,12 +197,12 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
                   onChange={(e) => setTechInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Add technology (e.g., React)"
-                  className="bg-navy border-slate/20 focus-visible:ring-teal"
+                  className="bg-white border-gray-300 focus-visible:ring-portfolio-blue"
                 />
                 <Button 
                   type="button"
                   onClick={handleAddTech}
-                  className="ml-2 bg-teal text-navy-dark hover:bg-teal-dark"
+                  className="ml-2 bg-portfolio-blue text-white hover:bg-portfolio-blue/90"
                 >
                   Add
                 </Button>
@@ -211,12 +210,12 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
               
               <div className="flex flex-wrap gap-2 mt-2">
                 {formData.technologies.map((tech, index) => (
-                  <div key={index} className="bg-navy px-3 py-1 rounded-full text-teal border border-teal/30 flex items-center">
+                  <div key={index} className="bg-portfolio-blue/10 px-3 py-1 rounded-full text-portfolio-blue border border-portfolio-blue/30 flex items-center">
                     {tech}
                     <button
                       type="button"
                       onClick={() => handleRemoveTech(index)}
-                      className="ml-2 text-slate-light hover:text-teal"
+                      className="ml-2 text-portfolio-gray hover:text-portfolio-blue"
                     >
                       <X size={14} />
                     </button>
@@ -252,13 +251,12 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
                   type="button"
                   variant="outline"
                   onClick={onCancel}
-                  className="border-slate text-slate-light hover:text-white hover:bg-navy"
                 >
                   Cancel
                 </Button>
                 <Button 
                   type="submit"
-                  className="bg-teal text-navy-dark hover:bg-teal-dark"
+                  className="bg-portfolio-blue text-white hover:bg-portfolio-blue/90"
                   disabled={isSubmitting}
                 >
                   {isSubmitting 
@@ -272,7 +270,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
       </div>
 
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent className="bg-navy-light border-slate/20">
+        <AlertDialogContent className="bg-white border-gray-200">
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -281,7 +279,7 @@ const ProjectForm = ({ project, onSave, onCancel, onDelete }: ProjectFormProps) 
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="border-slate text-slate-light hover:text-white hover:bg-navy">
+            <AlertDialogCancel>
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction 
