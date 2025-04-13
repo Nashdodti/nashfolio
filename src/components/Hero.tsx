@@ -8,7 +8,7 @@ const Hero = () => {
         <div className="max-w-3xl">
           <div className="space-y-6 animate-fade-in">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">
-              Hello, I'm <span className="gradient-text">Your Nash</span>
+              Hello, I'm <span className="gradient-text">Nash</span>
             </h1>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-portfolio-gray">
               Web App Developer
