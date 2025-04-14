@@ -8,7 +8,6 @@ import { Plus } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { supabaseTyped as supabase } from '@/integrations/supabase/client-typed';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useAdmin } from '@/contexts/AdminContext';
 
 const ProjectsSection = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -16,7 +15,6 @@ const ProjectsSection = () => {
   const [currentProject, setCurrentProject] = useState<Project | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
-  const { isAdmin } = useAdmin();
 
   useEffect(() => {
     fetchProjects();
@@ -190,15 +188,13 @@ const ProjectsSection = () => {
               different skills and technologies.
             </p>
           </div>
-          {isAdmin && (
-            <Button 
-              onClick={handleAddProject}
-              className="gradient-button whitespace-nowrap"
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              Add Project
-            </Button>
-          )}
+          <Button 
+            onClick={handleAddProject}
+            className="gradient-button whitespace-nowrap"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add Project
+          </Button>
         </div>
 
         {isLoading ? (
@@ -223,7 +219,7 @@ const ProjectsSection = () => {
                     <ProjectCard 
                       key={project.id} 
                       project={project} 
-                      onEditClick={isAdmin ? handleEditProject : undefined}
+                      onEditClick={handleEditProject}
                     />
                   ))}
                 </div>
@@ -237,7 +233,7 @@ const ProjectsSection = () => {
                   <ProjectCard 
                     key={project.id} 
                     project={project} 
-                    onEditClick={isAdmin ? handleEditProject : undefined}
+                    onEditClick={handleEditProject}
                   />
                 ))}
               </div>
