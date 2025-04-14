@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Project } from '@/types/project';
 import ProjectCard from './ProjectCard';
 import ProjectForm from './ProjectForm';
+import PasswordVerificationDialog from './PasswordVerificationDialog';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
@@ -14,6 +15,9 @@ const ProjectsSection = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentProject, setCurrentProject] = useState<Project | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
+  const [pendingAction, setPendingAction] = useState<"add" | "edit" | null>(null);
+  const [projectToEdit, setProjectToEdit] = useState<Project | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -63,13 +67,27 @@ const ProjectsSection = () => {
   };
 
   const handleAddProject = () => {
-    setCurrentProject(undefined);
-    setIsFormOpen(true);
+    setPendingAction("add");
+    setIsPasswordDialogOpen(true);
   };
 
   const handleEditProject = (project: Project) => {
-    setCurrentProject(project);
-    setIsFormOpen(true);
+    setPendingAction("edit");
+    setProjectToEdit(project);
+    setIsPasswordDialogOpen(true);
+  };
+
+  const handlePasswordSuccess = () => {
+    if (pendingAction === "add") {
+      setCurrentProject(undefined);
+      setIsFormOpen(true);
+    } else if (pendingAction === "edit" && projectToEdit) {
+      setCurrentProject(projectToEdit);
+      setIsFormOpen(true);
+    }
+    
+    setPendingAction(null);
+    setProjectToEdit(null);
   };
 
   const handleSaveProject = async (project: Project) => {
@@ -250,6 +268,12 @@ const ProjectsSection = () => {
           onDelete={handleDeleteProject}
         />
       )}
+
+      <PasswordVerificationDialog
+        open={isPasswordDialogOpen}
+        onOpenChange={setIsPasswordDialogOpen}
+        onSuccess={handlePasswordSuccess}
+      />
     </section>
   );
 };
